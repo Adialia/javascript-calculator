@@ -6,36 +6,43 @@
 	<link rel="stylesheet" type="text/css" href="style.css">
 </head>
 <body>
-	<h1>JavaScript Calculator</h1>
-<p class="warning">Don't divide by zero</p>
+	<div class="main">
 
-<div id="calculator" class="calculator">
+    <div>
+    <button type="button" class="operaion">C</button>
+    <label for="output">0</label>
+    </div> 
 
-  <button id="clear" class="clear">C</button>
+    <div>
+    <button type="button" class="number">7</button>
+    <button type="button" class="number">8</button>
+    <button type="button" class="number">9</button>
+    <button type="button" class="operation">+</button>
+    </div>
 
-  <div id="viewer" class="viewer">0</div>
+    <div>
+    <button type="button" class="number">4</button>
+    <button type="button" class="number">5</button>
+    <button type="button" class="number">6</button>
+    <button type="button" class="operation">-</button>
+    </div>
 
-  <button class="num" data-num="7">7</button>
-  <button class="num" data-num="8">8</button>
-  <button class="num" data-num="9">9</button>
-  <button data-ops="plus" class="ops">+</button>
+    <div>
+    <button type="button" class="number">1</button>
+    <button type="button" class="number">2</button>
+    <button type="button" class="number">3</button>
+    <button type="button" class="operation">*</button>
+    </div>
 
-  <button class="num" data-num="4">4</button>
-  <button class="num" data-num="5">5</button>
-  <button class="num" data-num="6">6</button>
-  <button data-ops="minus" class="ops">-</button>
+    <div>
+    <button type="button" class="number">0</button>
+    <button type="button" class="operation">.</button>
+    <button type="button" class="evaluate">=</button>
+    <button type="button" class="operation">/</button>
+    </div>
 
-  <button class="num" data-num="1">1</button>
-  <button class="num" data-num="2">2</button>
-  <button class="num" data-num="3">3</button>
-  <button data-ops="times" class="ops">*</button>
+  </div>
+<script src="script.js"></script>
 
-  <button class="num" data-num="0">0</button>
-  <button class="num" data-num=".">.</button>
-  <button id="equals" class="equals" data-result="">=</button>
-  <button data-ops="divided by" class="ops">/</button>
-</div>
-
-<button id="reset" class="reset">Reset Universe?</button>
 </body>
 </html>
