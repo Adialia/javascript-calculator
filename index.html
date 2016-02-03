@@ -4,12 +4,14 @@
 	<meta charset="UTF-8">
 	<title>Calculator</title>
 	<link rel="stylesheet" type="text/css" href="style.css">
+  <script src="bower_components/jquery/dist/jquery.min.js"></script>
+
 </head>
 <body>
 	<div class="main">
 
     <div>
-    <button type="button" class="operaion">C</button>
+    <button type="button" id="clear">C</button>
     <label for="output">0</label>
     </div> 
 
@@ -36,8 +38,8 @@
 
     <div>
     <button type="button" class="number">0</button>
-    <button type="button" class="operation">.</button>
-    <button type="button" class="evaluate">=</button>
+    <button type="button" id="dot">.</button>
+    <button type="button" id="evaluate">=</button>
     <button type="button" class="operation">/</button>
     </div>
 
