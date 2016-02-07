@@ -68,29 +68,68 @@ $(document).ready(function(){
 
 	}
 
-	function infixToPostfix(infix){
-		var postfix = '';
-		var stack = [];
+	function createTokenArray(string){
+		console.log("createTokenArray");
+		var array = [];
+		var re = /[+-\//*]/g;
+		var tokenArray = string.split(re);
 
-		for (var i = 0; i < infix.length; i++){
-			 if ((infix[i] >= '0') && (infix[i] <= '9')){
-			 	postfix += infix[i];
-			 };
-			 else if ((infix[i] == '*') || (infix[i] == '+') || (infix[i] == '-') || (infix[i] == '/')){
-			 	if (stack.length === 0){
-			 		stack.push(infix[i]);
-			 	}
-			 	else {
-			 		while (stack.length != 0){
-
-			 		}
-			 	}
-
-
-			 }
+		//console.log(tokenArray.length, tokenArray);
+		while(tokenArray.length != 0){
+			array.push(tokenArray[0]);
+			//console.log(array, tokenArray);
+			var opIndex = string.indexOf(tokenArray[0])+tokenArray[0].length;
+			//console.log(opIndex, string,tokenArray[0] );
+			//console.log("opIndex",opIndex, "string", string);
+			if (string[opIndex]){
+				array.push(string[opIndex]);
+			}
+			tokenArray.shift();
+			console.log("ONE!!!", array);
 		}
 
+		console.log("final aray", array);
+		return array;
+	}
+
+	function infixToPostfix(infix){
+		var  prec = {
+			"*": 2,
+    		"/": 2,
+    		"+": 1,
+    		"-": 1	
+		};
+		var postfix = [];
+		var opstack = [];
+		//var re = /[+-\//*]/g;
+		var tokenArray = createTokenArray(infix);
+
+		console.log(infix);
+		console.log(tokenArray);
+		tokenArray.forEach(function(token){
+			if (((token >= '0') && (token <= '9')) || (token == '.')){
+				postfix.push(token);
+			}
+			else if ((token == '*') || (token == '+') || (token == '-') || (token == '/')){
+				while ((opstack.length != 0) && (prec[opstack[opstack.length]] >= prec[token])){
+					postfix.push(opstack.pop());
+				}
+				opstack.push(token);
+			}
+		})
+
+		while (opstack.length != 0){
+			postfix.push(opstack.pop());
+		}
+
+		console.log(postfix);
 		return postfix;
 	}
+
+	function evaluatePostfix(postfixArray){
+		
+	}
+
+	console.log(infixToPostfix("10+5*2"));
 
 });
