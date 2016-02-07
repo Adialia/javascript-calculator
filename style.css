@@ -13,10 +13,11 @@ button{
   top: 50px;
 }
 
-label{
-  height: 50px;
-  margin: 2px;
-  width: 50px;
-  text-align: right;
+p{
+
+  text-align: left;
   color: red;
+  position: absolute;
+  left: 60px;
+  top: 2px;
 }

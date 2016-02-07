@@ -9,7 +9,7 @@ $(document).ready(function(){
 	$('#evaluate').on('click', evaluateExpression)
 
 	function render(){
-		$('label').text(inputString);
+		$('p').text(inputString);
 	}
 
 	function addNumberToExpression(){
@@ -56,7 +56,7 @@ $(document).ready(function(){
 				inputString += '.';	
 			}
 			render();
-		}
+		}																																																																																																																																																																																																										
 	};
 
 	function clearOutput(){
@@ -66,6 +66,31 @@ $(document).ready(function(){
 
 	function evaluateExpression(){
 
+	}
+
+	function infixToPostfix(infix){
+		var postfix = '';
+		var stack = [];
+
+		for (var i = 0; i < infix.length; i++){
+			 if ((infix[i] >= '0') && (infix[i] <= '9')){
+			 	postfix += infix[i];
+			 };
+			 else if ((infix[i] == '*') || (infix[i] == '+') || (infix[i] == '-') || (infix[i] == '/')){
+			 	if (stack.length === 0){
+			 		stack.push(infix[i]);
+			 	}
+			 	else {
+			 		while (stack.length != 0){
+
+			 		}
+			 	}
+
+
+			 }
+		}
+
+		return postfix;
 	}
 
 });
