@@ -66,35 +66,36 @@ $(document).ready(function(){
 	}
 
 	function evaluateExpression(){
-
+		if (isOperation(inputString[inputString.length-1])){
+			inputString = inputString.slice(-1);
+		};
+		var array = infixToPostfix(inputString);
+		//console.log(array);
+		var res = evaluatePostfix(array);
+		//console.log(res);
+		inputString = res.toString();
+		render();
 	}
 
-// dot problem
-	function createTokenArray(string){
-		//console.log("createTokenArray");
+	function createTokenArray(input){
+		var string = input.slice();
 		var array = [];
-		var re = /[+-\/\*]/g;
+		var re = /[+\-\/\*]/g;
 		var tokenArray = string.split(re);
 
-		//console.log(tokenArray.length, tokenArray);
 		while(tokenArray.length != 0){
 			array.push(tokenArray[0]);
-			//console.log(array, tokenArray);
-			var opIndex = string.indexOf(tokenArray[0])+tokenArray[0].length;
-			//console.log(opIndex, string,tokenArray[0] );
-			//console.log("opIndex",opIndex, "string", string);
-			if (string[opIndex]){
-				array.push(string[opIndex]);
+			string = string.slice(tokenArray[0].length);
+			if (string[0]){
+				array.push(string[0]);
+				string = string.slice(1);
 			}
 			tokenArray.shift();
-			//console.log("ONE!!!", array);
 		}
-
-		console.log("createTokenArray", array);
 		return array;
-	}
+	};
 
-	function infixToPostfix(infix){
+	function infixToPostfix(infix) {				
 		var  prec = {
 			"*": 2,
     		"/": 2,
@@ -103,30 +104,24 @@ $(document).ready(function(){
 		};
 		var postfix = [];
 		var opstack = [];
-		//var re = /[+-\//*]/g;
 		var tokenArray = createTokenArray(infix);
 
-		console.log("infix",infix);
-		//console.log(tokenArray);
 		tokenArray.forEach(function(token){
 			if (isOperation(token)){
 				while ((opstack.length != 0) && (prec[opstack[opstack.length-1]] >= prec[token])){
-					//console.log("at leat once");
 					postfix.push(opstack.pop());
 				}
 				opstack.push(token);
-/*				console.log("opstack",opstack);
-				console.log("postfix",postfix);*/
 			}
 			else
-			{
+			{	
 				postfix.push(token);
 			}
-		})
+		});
 
 		while (opstack.length != 0){
 			postfix.push(opstack.pop());
-		}
+		};
 
 		console.log(postfix);
 		return postfix;
@@ -134,10 +129,9 @@ $(document).ready(function(){
 
 	function isOperation(string){
 		return ((string == '*') || (string == '+') || (string == '-') || (string == '/'))
-	}
+	};
 
 	function evaluatePostfix(postfixArray){
-		//console.log("postfixArray",postfixArray);
 		var operandStack = [];
 
 		postfixArray.forEach(function(token){
@@ -145,9 +139,7 @@ $(document).ready(function(){
 				var operand2 = operandStack.pop();
             	var operand1 = operandStack.pop();
             	var result = doMath(token,operand1,operand2);
-            	//console.log(token,operand1,operand2);
             	operandStack.unshift(result);
-            	//console.log("operandStack",operandStack);
 			}
 			else{
 				operandStack.push(parseFloat(token));
@@ -169,11 +161,8 @@ $(document).ready(function(){
 		else if (op === "-"){
 			return op1 - op2;
 		}
-	}
+	};
 
-	var array = infixToPostfix("10+5*2+12/3");
-	console.log(array);
-	var res = evaluatePostfix(array);
-	console.log(res);
+
 
 });
