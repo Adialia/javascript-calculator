@@ -2,16 +2,14 @@ $(document).ready(function(){
 	var inputString = '0';
 	var $output = $('p'); 
 
-	// event handlers
+	// bind event handlers
 	$('.number').on('click', addNumberToExpression);
 	$('.operation').on('click', addOperatorToExpression)
 	$('#dot').on('click', addDotToExpression);
 	$('#clear').on('click', clearOutput);
 	$('#evaluate').on('click', evaluateExpression)
 
-	function render(){
-		$output.text(inputString);
-	}
+	//event handlers
 
 	function addNumberToExpression(){
 		var number = $(this).text();
@@ -69,7 +67,7 @@ $(document).ready(function(){
 		if (isOperation(inputString[inputString.length-1])){
 			inputString = inputString.slice(-1);
 		};
-		var array = infixToPostfix(inputString);
+		var array = infixToPostfixArray(inputString);
 		//console.log(array);
 		var res = evaluatePostfix(array);
 		//console.log(res);
@@ -77,7 +75,13 @@ $(document).ready(function(){
 		render();
 	}
 
-	function createTokenArray(input){
+
+	// helper functions
+	function render(){
+		$output.text(inputString);
+	}
+
+	function stringToInfixArray(input){
 		var string = input.slice();
 		var array = [];
 		var re = /[+\-\/\*]/g;
@@ -95,7 +99,7 @@ $(document).ready(function(){
 		return array;
 	};
 
-	function infixToPostfix(infix) {				
+	function infixToPostfixArray(infix) {				
 		var  prec = {
 			"*": 2,
     		"/": 2,
@@ -104,7 +108,7 @@ $(document).ready(function(){
 		};
 		var postfix = [];
 		var opstack = [];
-		var tokenArray = createTokenArray(infix);
+		var tokenArray = stringToInfixArray(infix);
 
 		tokenArray.forEach(function(token){
 			if (isOperation(token)){
@@ -127,10 +131,6 @@ $(document).ready(function(){
 		return postfix;
 	}
 
-	function isOperation(string){
-		return ((string == '*') || (string == '+') || (string == '-') || (string == '/'))
-	};
-
 	function evaluatePostfix(postfixArray){
 		var operandStack = [];
 
@@ -138,7 +138,7 @@ $(document).ready(function(){
 			if (isOperation(token)){
 				var operand2 = operandStack.pop();
             	var operand1 = operandStack.pop();
-            	var result = doMath(token,operand1,operand2);
+            	var result = applyOperation(token,operand1,operand2);
             	operandStack.unshift(result);
 			}
 			else{
@@ -148,7 +148,7 @@ $(document).ready(function(){
 		return operandStack.pop();
 	};
 
-	function doMath(op,op1,op2){
+	function applyOperation(op,op1,op2){
 		if (op === "*"){
 			return op1 * op2;
 		}
@@ -163,6 +163,8 @@ $(document).ready(function(){
 		}
 	};
 
-
+	function isOperation(string){
+		return ((string == '*') || (string == '+') || (string == '-') || (string == '/'))
+	};
 
 });
